@@ -12,7 +12,8 @@ def register_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account was created successfully!')
-            return redirect('accounts:login')
+            return redirect('shop:product_list')
+
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
