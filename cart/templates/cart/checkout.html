@@ -8,30 +8,91 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     {% load custom_filters %}
     <style>
-         /* Navbar Buttons Styling */
-        .navbar-nav .nav-link {
-            background-color: #6b8e23; /* Button green */
-            color: white !important;
-            border-radius: 5px;
-            padding: 8px 15px;
-            margin: 0 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar-nav .nav-link:hover {
-            background-color: red !important; /* Red on hover */
-            color: white !important;
+        /* Navbar Styling */
+        .navbar {
+            background-color: #556b2f; /* Dark green */
         }
 
-        .hero-overlay {
-            color: #fff; /* Text color */
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); /* Makes text stand out */
-}
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #8b4513; /* SaddleBrown */
+            color: #fff !important;
+        }
+
+        /* Table Styling */
+        .table {
+            border: 1px solid #ddd;
+            background-color: #f9f9f6; /* Light beige */
+        }
+
+        .table thead {
+            background-color: #8b4513; /* SaddleBrown */
+            color: #fff;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f4efe6; /* Subtle hover color */
+        }
+
+        /* Total Price Styling */
+        .total-price {
+            font-weight: bold;
+            color: #6b8e23; /* Olive Drab */
+        }
+
+        /* Button Styling */
+        .btn-success {
+            background-color: #556b2f; /* Dark green */
+            border-color: #556b2f;
+        }
+
+        .btn-success:hover {
+            background-color: #6b8e23; /* Olive Drab */
+        }
+
+        .btn-outline-secondary {
+            color: #8b4513;
+            border-color: #8b4513;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #8b4513;
+            color: #fff;
+        }
+
+        /* Page Background */
+        body {
+            background-color: #f4efe6; /* Light farm-themed beige */
+            color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h3 {
+            color: #556b2f; /* Dark green */
+        }
+
+        .container {
+            margin-top: 30px;
+            flex: 1;
+        }
+
+
     </style>
 </head>
 <body>
-       <!-- Navigation Bar -->
+    <!-- Navigation Bar -->
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark-green navbar-dark">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'home' %}">Harvest Farms</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,9 +102,6 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <!--a class="nav-link" href="{% url 'cart:cart' %}"><i class="bi bi-cart3"></a--->
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'contact:contact_form' %}">Contact Us</a>
@@ -57,6 +115,7 @@
         </nav>
     </header>
 
+    <div class="container">
         <!-- Header with cart icon -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1><i class="bi bi-cart3"></i> Checkout</h1>
@@ -66,7 +125,7 @@
         <!-- Cart table -->
         <div class="table-responsive mb-4">
             <table class="table table-bordered table-hover">
-                <thead class="table-dark">
+                <thead>
                     <tr>
                         <th>Product</th>
                         <th>Price</th>
@@ -89,7 +148,7 @@
 
         <!-- Total price display -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3>Total Price: <span class="text-success">${{ total_price }}</span></h3>
+            <h3>Total Price: <span class="total-price">${{ total_price }}</span></h3>
             <p class="text-muted">* Prices include all applicable taxes</p>
         </div>
 
