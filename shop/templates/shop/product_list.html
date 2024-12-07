@@ -111,7 +111,7 @@
                             <a class="nav-link" href="{% url 'contact:contact_form' %}">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:register' %}">Register/Sign In</a>
+                            <a class="nav-link" href="{% url 'home' %}">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -127,7 +127,7 @@
                 <div class="col-md-4">
                     <div class="product-item">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}"  style="width:200px;height:200px">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}"  style="width:400px;height:250px">
                         {% endif %}
                         <h3>{{ product.name }}</h3>
                         <p>{{ product.description }}</p>
