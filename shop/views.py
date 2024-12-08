@@ -9,7 +9,6 @@ from django.views.generic import DetailView
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-   # products = Product.objects.filter(stock__gt=0)
     products = Product.objects.all()
 
     if category_slug:

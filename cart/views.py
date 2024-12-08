@@ -85,8 +85,6 @@ def checkout(request):
     cart_items = Cart.objects.filter(user=request.user)
 
     # Calculate the total price
-    #total_price = sum(item.product.price * item.quantity for item in cart_items)
-
     # Add total price calculation in the view
     for item in cart_items:
         item.total_price = item.product.price * item.quantity
