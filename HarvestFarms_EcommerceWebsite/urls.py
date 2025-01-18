@@ -28,17 +28,17 @@ def check_url_patterns(urlconf):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('contact/', include('contact.urls')),  # Contact form
     path('', include('core.urls')),  # Home and general pages
-    path('accounts/', include('accounts.urls')),  # Authentication
+    path('contact/', include('contact.urls')),  # Contact form
+    path('accounts/', include('accounts.urls')),  # Authentication (login, logout, register, etc.)
     path('shop/', include('shop.urls')),  # Shop products
     path('cart/', include('cart.urls')),  # Cart management
-    path('login/', include('accounts.urls')),
-    path('logout/', include('accounts.urls')),
-    path('checkout/', views.checkout, name='checkout'),
-
-
+    #path('checkout/', shop_views.checkout, name='checkout'),  # Checkout page
 ]
+
+
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
