@@ -32,7 +32,8 @@ SECRET_KEY = 'django-insecure-e=nb2!$3n@mah@e_6n$qsf!_klhk%#q3o__)2x0mxt1owqni^=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'HarvestFarms_EcommerceWebsite.on render.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'harvestfarms-ecommercewebsite.onrender.com']
+
 
 
 
@@ -141,7 +142,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-STATICFILES_STORANGE = 'whitenoise.storange.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
