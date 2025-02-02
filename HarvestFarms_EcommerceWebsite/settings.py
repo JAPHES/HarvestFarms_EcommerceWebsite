@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-e=nb2!$3n@mah@e_6n$qsf!_klhk%#q3o__)2x0mxt1owqni^=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'HarvestFarms_EcommerceWebsite.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'HarvestFarms_EcommerceWebsite.on render.com']
 
 
 
