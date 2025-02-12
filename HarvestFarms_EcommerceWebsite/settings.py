@@ -88,11 +88,24 @@ WSGI_APPLICATION = 'HarvestFarms_EcommerceWebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+#DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+   # }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "harvestfarms",
+        'USER': "harvestfarms_user",
+        'PASSWORD': "18m0aqoB58HMyVTzo2zKW07VtYt2OA42",
+        'HOST': "dpg-cum7vo8gph6c73dcr1qg-a.oregon-postgres.render.com",
+        'PORT': 5432,
+
+
+   }
 }
 
 
