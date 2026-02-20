@@ -5,69 +5,282 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }}</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --hf-cream: #f8f5ea;
+            --hf-ink: #1f2b20;
+            --hf-forest: #1f5c3d;
+            --hf-forest-dark: #17452e;
+            --hf-gold: #cf9a3b;
+            --hf-muted: #5d6b62;
+            --hf-card: #ffffff;
+            --hf-line: #dce5dd;
+            --hf-shadow: 0 18px 42px rgba(19, 37, 27, 0.14);
+        }
+
         body {
-            background-color: #f8f9fa;
-            color: #495057;
+            margin: 0;
+            color: var(--hf-ink);
+            background:
+                radial-gradient(circle at 90% -20%, rgba(30, 92, 62, 0.16), transparent 38%),
+                radial-gradient(circle at -10% 20%, rgba(207, 154, 59, 0.16), transparent 34%),
+                var(--hf-cream);
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
         }
-        .product-container {
-            max-width: 600px;
-            margin-top: 50px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        .hf-shell {
+            padding: 2rem 0 3.25rem;
         }
-        img {
+
+        .hf-detail-card {
+            border: 1px solid rgba(31, 92, 61, 0.12);
+            border-radius: 24px;
+            background: var(--hf-card);
+            box-shadow: var(--hf-shadow);
+            overflow: hidden;
+            animation: cardRise 420ms ease;
+        }
+
+        .hf-media-wrap {
+            position: relative;
+            min-height: 320px;
+            background: linear-gradient(140deg, #d8ead5, #f3ead4);
+        }
+
+        .hf-product-image {
             width: 100%;
-            height: 300px;
+            height: 100%;
+            min-height: 320px;
+            max-height: 560px;
             object-fit: cover;
-            border-radius: 8px;
+            display: block;
         }
-        .btn-custom {
-            background-color: #2e8b57;
-            color: white;
+
+        .hf-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+            border-radius: 999px;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: rgba(31, 92, 61, 0.92);
+            color: #fff;
+        }
+
+        .hf-content {
+            padding: 2rem 1.6rem 1.7rem;
+        }
+
+        .hf-title {
+            margin: 0 0 0.65rem;
+            line-height: 1.16;
+            font-size: clamp(1.7rem, 3vw, 2.35rem);
+            font-weight: 800;
+        }
+
+        .hf-description {
+            color: var(--hf-muted);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+            max-width: 70ch;
+        }
+
+        .hf-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .hf-meta-box {
+            border: 1px solid var(--hf-line);
+            border-radius: 14px;
+            padding: 0.8rem 0.9rem;
+            background: #fcfdfb;
+        }
+
+        .hf-meta-label {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6f7e74;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+
+        .hf-price {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--hf-forest);
+        }
+
+        .hf-stock {
+            font-weight: 700;
+        }
+
+        .hf-stock.in {
+            color: #2a844d;
+        }
+
+        .hf-stock.out {
+            color: #ab3e34;
+        }
+
+        .hf-purchase-card {
+            border: 1px dashed rgba(31, 92, 61, 0.35);
+            border-radius: 16px;
+            padding: 1rem;
+            background: #fbfef8;
+        }
+
+        .hf-form-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #4f6055;
+            margin-bottom: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .hf-qty-input {
+            border: 1px solid #bfd0bf;
+            border-radius: 12px;
+            padding: 0.62rem 0.78rem;
+            font-weight: 600;
+        }
+
+        .hf-btn-primary {
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--hf-forest), var(--hf-forest-dark));
+            color: #fff;
         }
-        .btn-custom:hover {
-            background-color: #255d40;
+
+        .hf-btn-primary:hover {
+            color: #fff;
+            filter: brightness(1.06);
+        }
+
+        .hf-btn-accent {
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            background: linear-gradient(140deg, #d7a241, #b78327);
+            color: #fff;
+        }
+
+        .hf-btn-accent:hover {
+            color: #fff;
+            filter: brightness(1.05);
+        }
+
+        .hf-btn-outline {
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            border: 1px solid rgba(31, 92, 61, 0.32);
+            color: var(--hf-forest);
+            background: #fff;
+        }
+
+        .hf-btn-outline:hover {
+            background: rgba(31, 92, 61, 0.06);
+            color: var(--hf-forest-dark);
+        }
+
+        @keyframes cardRise {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 991px) {
+            .hf-shell {
+                padding-top: 1.1rem;
+            }
+
+            .hf-content {
+                padding: 1.25rem 1rem 1.1rem;
+            }
+
+            .hf-meta-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     {% include 'partials/navbar.html' %}
-    <div class="container product-container text-center">
-        <h1>{{ product.name }}</h1>
-        {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null;this.src='{% static 'core/images/homepicture.jpg' %}';">
-        {% else %}
-            <img src="{% static 'core/images/homepicture.jpg' %}" alt="No image available">
-        {% endif %}
-        <p class="mt-3"><strong>Description:</strong> {{ product.description }}</p>
-        <p><strong>Price:</strong> ${{ product.price }}</p>
-        <p><strong>Stock:</strong> {{ product.stock }}</p>
+    <main class="hf-shell">
+        <div class="container">
+            <div class="hf-detail-card row g-0">
+                <div class="col-lg-6">
+                    <div class="hf-media-wrap h-100">
+                        {% if product.stock > 0 %}
+                            <span class="hf-badge">In Stock</span>
+                        {% else %}
+                            <span class="hf-badge" style="background: rgba(171, 62, 52, 0.92);">Sold Out</span>
+                        {% endif %}
+                        {% if product.image %}
+                            <img class="hf-product-image" src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null;this.src='{% static 'core/images/homepicture.jpg' %}';">
+                        {% else %}
+                            <img class="hf-product-image" src="{% static 'core/images/homepicture.jpg' %}" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+                </div>
 
-        <!-- Add to Cart Form -->
-        <form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="quantity" class="form-label">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control">
+                <div class="col-lg-6">
+                    <section class="hf-content">
+                        <h1 class="hf-title">{{ product.name }}</h1>
+                        <p class="hf-description">{{ product.description|linebreaksbr }}</p>
+
+                        <div class="hf-meta-grid">
+                            <div class="hf-meta-box">
+                                <span class="hf-meta-label">Price</span>
+                                <span class="hf-price">${{ product.price }}</span>
+                            </div>
+                            <div class="hf-meta-box">
+                                <span class="hf-meta-label">Availability</span>
+                                {% if product.stock > 0 %}
+                                    <span class="hf-stock in">{{ product.stock }} unit{{ product.stock|pluralize }} ready</span>
+                                {% else %}
+                                    <span class="hf-stock out">Out of stock</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="hf-purchase-card">
+                            <form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
+                                {% csrf_token %}
+                                <label for="quantity" class="hf-form-label">Quantity</label>
+                                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control hf-qty-input mb-3" {% if product.stock < 1 %}disabled{% endif %}>
+                                <button type="submit" class="btn hf-btn-primary w-100 mb-2" {% if product.stock < 1 %}disabled{% endif %}>Add to Cart</button>
+                            </form>
+
+                            <a href="{% url 'cart:checkout' %}" class="btn hf-btn-accent w-100 mb-2">Proceed to Checkout</a>
+                            <a href="{% url 'shop:product_list' %}" class="btn hf-btn-outline w-100">Back to Product List</a>
+                        </div>
+                    </section>
+                </div>
             </div>
-                 <button type="submit" class="btn btn-custom w-100 mb-3">Add to Cart</button>
-        </form>
+        </div>
+    </main>
 
-
-        <!-- Checkout Button -->
-        <a href="{% url 'cart:checkout' %}" class="btn btn-primary w-100 mb-3">Proceed to Checkout</a>
-
-        <!-- Back to Product List -->
-        <a href="{% url 'shop:product_list' %}" class="btn btn-secondary w-100">Back to Product List</a>
-    </div>
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
