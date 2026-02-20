@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
             background-color: #f8f9fa;
             color: #495057;
         }
-        .container {
+        .product-container {
             max-width: 600px;
             margin-top: 50px;
             background-color: #ffffff;
@@ -34,58 +35,16 @@
         .btn-custom:hover {
             background-color: #255d40;
         }
-         /* Navbar Buttons Styling */
-        .navbar-nav .nav-link {
-            background-color: #6b8e23; /* Button green */
-            color: white !important;
-            border-radius: 5px;
-            padding: 8px 15px;
-            margin: 0 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar-nav .nav-link:hover {
-            background-color: red !important; /* Red on hover */
-            color: white !important;
-        }
-
-        .hero-overlay {
-            color: #fff; /* Text color */
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); /* Makes text stand out */
-}
     </style>
 </head>
 <body>
-        <!-- Navigation Bar -->
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark-green navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Harvest Farms</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <!--a class="nav-link" href="{% url 'cart:cart' %}"><i class="bi bi-cart3"></a--->
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact:contact_form' %}">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container text-center">
+    {% include 'partials/navbar.html' %}
+    <div class="container product-container text-center">
         <h1>{{ product.name }}</h1>
         {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null;this.src='{% static 'core/images/homepicture.jpg' %}';">
+        {% else %}
+            <img src="{% static 'core/images/homepicture.jpg' %}" alt="No image available">
         {% endif %}
         <p class="mt-3"><strong>Description:</strong> {{ product.description }}</p>
         <p><strong>Price:</strong> ${{ product.price }}</p>

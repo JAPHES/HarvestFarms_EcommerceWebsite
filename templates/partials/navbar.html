@@ -1,0 +1,47 @@
+<style>
+    .hf-site-nav {
+        background: linear-gradient(135deg, #1b2d1f, #2f5d3c);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    }
+    .hf-site-nav .navbar-brand {
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: 0.3px;
+    }
+    .hf-site-nav .navbar-nav .nav-link {
+        background-color: transparent !important;
+        color: rgba(255, 255, 255, 0.92) !important;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 0.45rem 0.9rem !important;
+        transition: background-color 0.2s ease;
+    }
+    .hf-site-nav .navbar-nav .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #fff !important;
+    }
+</style>
+<header>
+    <nav class="navbar navbar-expand-lg hf-site-nav navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Harvest Farms</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavShared" aria-controls="mainNavShared" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavShared">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shop:product_list' %}">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact:contact_form' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

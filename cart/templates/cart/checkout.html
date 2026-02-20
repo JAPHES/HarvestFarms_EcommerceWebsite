@@ -8,24 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     {% load custom_filters %}
     <style>
-        /* Navbar Styling */
-        .navbar {
-            background-color: #556b2f; /* Dark green */
-        }
-
-        .navbar-brand, .nav-link {
-            color: #fff !important;
-        }
-
-        .nav-link {
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .nav-link:hover {
-            background-color: #8b4513; /* SaddleBrown */
-            color: #fff !important;
-        }
-
         /* Table Styling */
         .table {
             border: 1px solid #ddd;
@@ -90,30 +72,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Harvest Farms</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact:contact_form' %}">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">LogOut</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    {% include 'partials/navbar.html' %}
 
     <div class="container">
         <!-- Header with cart icon -->

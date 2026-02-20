@@ -1,260 +1,410 @@
 
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Harvest Farms{% endblock %}</title>
-    {% load static %}
-
-    <!-- Add Bootstrap CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-
     <style>
-        /* Custom Colors */
-        .bg-dark-green {
-            background-color: #2f4f4f; /* Dark green for navbar and footer */
+        :root {
+            --soil-900: #1b2d1f;
+            --leaf-700: #2f5d3c;
+            --leaf-600: #3f7a4f;
+            --leaf-400: #68a05f;
+            --grain-100: #f6f2e8;
+            --grain-200: #ede6d3;
+            --ink-700: #2f332d;
+            --card-shadow: 0 16px 40px rgba(27, 45, 31, 0.12);
+            --hero-shadow: 0 30px 80px rgba(10, 20, 12, 0.32);
         }
-        .text-green {
-            color: #2e8b57; /* Text green for headings */
+
+        * {
+            box-sizing: border-box;
         }
-        .btn-green {
-            background-color: #6b8e23; /* Button green */
-            color: white;
+
+        body {
+            margin: 0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: var(--ink-700);
+            background:
+                radial-gradient(circle at 12% 5%, rgba(103, 160, 95, 0.2), transparent 38%),
+                radial-gradient(circle at 90% 20%, rgba(54, 98, 73, 0.15), transparent 35%),
+                linear-gradient(180deg, #fbf9f3 0%, #f4f0e4 42%, #f1ecd9 100%);
         }
-        .btn-green:hover {
-            background-color: #556b2f; /* Darker green on hover */
+
+        .headline-font {
+            font-family: "Fraunces", serif;
+            letter-spacing: -0.02em;
         }
-        .card-title {
-            color: #228b22; /* Forest green for card titles */
+
+        .hero {
+            padding: 4.8rem 0 4rem;
         }
+
+        .hero-tag {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(47, 93, 60, 0.15);
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--leaf-700);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero h1 {
+            margin-top: 1.2rem;
+            color: var(--soil-900);
+            font-size: clamp(2rem, 5.2vw, 3.8rem);
+            line-height: 1.07;
+        }
+
+        .hero p {
+            margin-top: 1rem;
+            font-size: 1.06rem;
+            color: #425145;
+            max-width: 580px;
+        }
+
+        .cta-row {
+            margin-top: 1.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, var(--leaf-700), var(--leaf-600));
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            padding: 0.8rem 1.3rem;
+            border-radius: 0.8rem;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 20px rgba(47, 93, 60, 0.3);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            color: #fff;
+            box-shadow: 0 13px 24px rgba(47, 93, 60, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(47, 93, 60, 0.2);
+            color: var(--leaf-700);
+            font-weight: 700;
+            padding: 0.8rem 1.3rem;
+            border-radius: 0.8rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: var(--soil-900);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.4rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats .stat-item {
+            min-width: 120px;
+        }
+
+        .stat-item .value {
+            color: var(--soil-900);
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .stat-item .label {
+            color: #536558;
+            font-size: 0.9rem;
+        }
+
+        .hero-image-wrap {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .hero-image-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 12% -6% -10% 10%;
+            background: linear-gradient(140deg, rgba(103, 160, 95, 0.42), rgba(27, 45, 31, 0.45));
+            border-radius: 1.8rem;
+            filter: blur(1px);
+            z-index: -1;
+        }
+
         .hero-image {
-            background-image: url('https://via.placeholder.com/1500x500');
-            background-size: cover;
-            background-position: center;
-            height: 500px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-        .hero-overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-
-        .hero-image {
-             height: 100vh; /* Adjust as needed */
-             overflow: hidden; /* Ensures no extra content spills out */
-}
-
-        .hero-image img {
-            object-fit: cover; /* Ensures the image covers the section */
-            height: 100%;
             width: 100%;
-}
-         /* Navbar Buttons Styling */
-        .navbar-nav .nav-link {
-            background-color: #6b8e23; /* Button green */
-            color: white !important;
-            border-radius: 5px;
-            padding: 8px 15px;
-            margin: 0 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar-nav .nav-link:hover {
-            background-color: red !important; /* Red on hover */
-            color: white !important;
+            border-radius: 1.6rem;
+            box-shadow: var(--hero-shadow);
+            object-fit: cover;
+            aspect-ratio: 4 / 5;
         }
 
-        .hero-overlay {
-            color: #fff; /* Text color */
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); /* Makes text stand out */
+        .content-section {
+            padding: 2.5rem 0 1.25rem;
         }
 
-    .services .card {
-        height: 100%; /* Ensures all cards are the same height */
-        display: flex;
-        flex-direction: column; /* Allows content to stack */
-    }
+        .section-title {
+            color: var(--soil-900);
+            font-size: clamp(1.5rem, 3.6vw, 2.3rem);
+        }
 
-    .services .card-img-top {
-        object-fit: cover; /* Ensures the image scales properly */
-        height: 200px; /* Sets a consistent height for all images */
-        width: 100%; /* Ensures images span the card width */
-        border-top-left-radius: 8px; /* Matches card border radius */
-        border-top-right-radius: 8px;
-    }
+        .section-subtitle {
+            color: #4f5f53;
+            max-width: 760px;
+            margin: 0.8rem auto 0;
+        }
 
-    .services .card-body {
-        flex-grow: 1; /* Makes the body expand to fill remaining space */
-        display: flex;
-        flex-direction: column; /* Stacks content in the body */
-        justify-content: space-between; /* Spaces elements evenly */
-        padding: 15px;
-    }
+        .feature-card {
+            height: 100%;
+            border: 1px solid rgba(47, 93, 60, 0.1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.74));
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: transform 0.25s ease;
+        }
 
-    .services .card-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #2e8b57;
-    }
+        .feature-card:hover {
+            transform: translateY(-6px);
+        }
 
-    .services .card-text {
-        font-size: 0.95rem;
-        color: #495057;
-    }
+        .feature-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
 
-    .services .card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
+        .feature-icon {
+            width: 2.8rem;
+            height: 2.8rem;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 0.8rem;
+            background: rgba(103, 160, 95, 0.16);
+            color: var(--leaf-700);
+            font-size: 1.25rem;
+        }
 
-    .services .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+        .mission-box {
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff, #f5f0e3);
+            border: 1px solid rgba(47, 93, 60, 0.12);
+            box-shadow: var(--card-shadow);
+        }
 
+        .mission-box h3 {
+            color: var(--soil-900);
+            margin-bottom: 0.8rem;
+        }
 
+        .section-cta {
+            margin: 3rem 0 4.2rem;
+            border-radius: 1.2rem;
+            background: linear-gradient(135deg, var(--soil-900), var(--leaf-700));
+            color: #fff;
+            box-shadow: 0 18px 48px rgba(12, 24, 14, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
 
+        .section-cta::after {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            right: -70px;
+            bottom: -180px;
+            background: rgba(130, 194, 117, 0.24);
+        }
 
+        .section-cta .inner {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .site-footer {
+            background-color: #19291b;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .site-footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+
+        .site-footer a:hover {
+            color: #d9efce;
+        }
+
+        @media (max-width: 992px) {
+            .hero {
+                padding-top: 3rem;
+            }
+
+            .hero-image {
+                margin-top: 2rem;
+                aspect-ratio: 5 / 4;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark-green navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Harvest Farms</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact:contact_form' %}">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:register' %}">Register/Sign In</a>
-                        </li>
-                    </ul>
+{% include 'partials/navbar.html' %}
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center g-4 g-lg-5">
+                <div class="col-lg-7">
+                    <span class="hero-tag"><i class="bi bi-tree-fill"></i> Sustainable farming since 2017</span>
+                    <h1 class="headline-font">Grow better harvests with trusted seedlings and practical farm support.</h1>
+                    <p>
+                        Harvest Farms supplies grafted avocado and macadamia seedlings, on-farm guidance, and reliable delivery.
+                        We help farmers improve yields with quality planting material and actionable agronomy advice.
+                    </p>
+                    <div class="cta-row">
+                        <a href="{% url 'shop:product_list' %}" class="btn-main">Shop Seedlings</a>
+                        <a href="{% url 'contact:contact_form' %}" class="btn-secondary">Talk to an Expert</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="value">2017</div>
+                            <div class="label">Year Founded</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value">High</div>
+                            <div class="label">Survival Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value">Nationwide</div>
+                            <div class="label">Delivery Reach</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <!---Hero image---->
-   <section class="hero-image position-relative">
-    <img src="{% static 'core/images/homeimage.jpg' %}" alt="Hero Background" class="img-fluid w-100">
-    <div class="hero-overlay text-center p-4 position-absolute top-50 start-50 translate-middle">
-        <h1 class="display-3">Discover the Best in Agriculture</h1>
-    </div>
-</section>
-
-
-
-    <!-- Main Content -->
-    <br>
-    <br>
-    <main class="container my-5">
-        <div class="jumbotron bg-light p-4 rounded">
-            {% block content %}
-            <h1 class="display-4 text-green text-center">Welcome to Oscar Farms</h1>
-            <p class="lead text-center">Explore Our Variety of Products</p>
-            <p class="text-center">We offer grafted avocado seedlings, macadamia seedlings, and more!</p>
-             {% endblock %}
-        </div>
-
-        <!-- About Section -->
-        <section class="about my-5">
-            <h2 class="text-green text-center mb-4">About Oscar Farms</h2>
-            <p class="text-center">Oscar Farms, established in 2017 and located in Chuka, is a trusted provider of high-quality
-                agricultural products. Specializing in grafted avocado seedlings, macadamia seedlings, and other farm essentials,
-                the company is committed to supporting farmers with reliable solutions for improved yields. </p>
-        </section>
-        <!------------------services section--------------------->
-
-        <section class="services my-5">
-    <h2 class="text-green text-center mb-4">Our Services</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'core/images/background.jpg' %}" class="card-img-top" alt="Seedlings">
-                <div class="card-body">
-                    <h5 class="card-title">High-Quality Seedlings</h5>
-                    <p class="card-text">At Oscar Farms, we are dedicated to providing high-quality grafted avocado seedlings.</p>
+                <div class="col-lg-5">
+                    <div class="hero-image-wrap">
+                        <img src="{% static 'core/images/homeimage.jpg' %}" alt="Healthy seedlings at Harvest Farms" class="hero-image">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'core/images/adressing.jpg' %}" class="card-img-top" alt="Consultation">
-                <div class="card-body">
-                    <h5 class="card-title">Farming Consultation</h5>
-                    <p class="card-text">Our experts offer personalized farming advice to help you maximize yields and adopt sustainable practices.</p>
+    </section>
+
+    <section class="content-section text-center">
+        <div class="container">
+            <h2 class="section-title headline-font">What We Offer</h2>
+            <p class="section-subtitle">
+                Built for farmers who need consistency, quality, and support from planting through growth.
+            </p>
+            <div class="row g-4 mt-2">
+                <div class="col-md-4">
+                    <article class="feature-card text-start">
+                        <img src="{% static 'core/images/background.jpg' %}" class="feature-image" alt="Grafted seedlings">
+                        <div class="p-4">
+                            <div class="feature-icon mb-3"><i class="bi bi-flower2"></i></div>
+                            <h3 class="h5 mb-2">Premium Seedlings</h3>
+                            <p class="mb-0 text-muted">Carefully selected grafted avocado and macadamia seedlings for stronger field performance.</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="feature-card text-start">
+                        <img src="{% static 'core/images/adressing.jpg' %}" class="feature-image" alt="Farmer consultation">
+                        <div class="p-4">
+                            <div class="feature-icon mb-3"><i class="bi bi-chat-dots"></i></div>
+                            <h3 class="h5 mb-2">Farming Consultation</h3>
+                            <p class="mb-0 text-muted">Practical guidance on spacing, planting, nutrition, and care based on your local conditions.</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="feature-card text-start">
+                        <img src="{% static 'core/images/pickup.jpg' %}" class="feature-image" alt="Delivery truck">
+                        <div class="p-4">
+                            <div class="feature-icon mb-3"><i class="bi bi-truck"></i></div>
+                            <h3 class="h5 mb-2">Reliable Delivery</h3>
+                            <p class="mb-0 text-muted">Seedlings and farm inputs delivered safely and on time so you can plan with confidence.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'core/images/pickup.jpg' %}" class="card-img-top" alt="Delivery">
-                <div class="card-body">
-                    <h5 class="card-title">Nationwide Delivery</h5>
-                    <p class="card-text">At Oscar Farms, we offer nationwide delivery to ensure every farmer, regardless of location, has access to our high-quality agricultural products.</p>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="mission-box">
+                        <h3 class="headline-font h3">Our Vision</h3>
+                        <p class="mb-0">
+                            To become a leading provider of sustainable agricultural solutions in Africa by enabling farmers
+                            to grow more with better planting materials, climate-smart practices, and trusted long-term support.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mission-box">
+                        <h3 class="headline-font h3">Our Mission</h3>
+                        <p class="mb-0">
+                            To equip farmers with high-quality seedlings, expert guidance, and dependable service that improves
+                            productivity, protects the environment, and strengthens rural livelihoods.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-cta mt-5">
+                <div class="inner d-md-flex justify-content-between align-items-center gap-3">
+                    <div>
+                        <h3 class="headline-font mb-2">Ready to plant with confidence?</h3>
+                        <p class="mb-0 text-white-50">Get started with quality seedlings and personalized support for your farm.</p>
+                    </div>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-light fw-bold px-4 py-2 mt-3 mt-md-0">Create Account</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
-    </main>
-         <!-- Vision and Mission Section -->
-        <section class="vision-mission row text-center my-5">
-            <div class="col-md-6">
-                <h3 class="text-green">Our Vision</h3>
-                <p>By 2030, Oscar Farms envisions becoming a leading provider of sustainable agricultural solutions across Africa.
-                    We aim to empower farmers with high-quality seedlings, innovative farming practices, and eco-friendly products
-                    that enhance productivity while preserving the environment. Through our commitment to excellence, community development,
-                    and agricultural innovation, we strive to create a lasting impact by fostering food security and improving livelihoods for generations to come.</p>
-            </div>
-            <div class="col-md-6">
-                <h3 class="text-green">Our Mission</h3>
-                <p>Oscar Farms' mission is to revolutionize agriculture by providing high-quality grafted avocado and
-                    macadamia seedlings, along with innovative farming solutions that empower farmers to achieve sustainable growth.
-                    We are dedicated to promoting environmental conservation, enhancing productivity, and supporting local communities through
-                    education and access to reliable agricultural resources. By fostering trust, innovation, and excellence, we aim to transform farming
-                    practices and contribute to a thriving agricultural ecosystem.</p>
-            </div>
-        </section>
-
-    <!-- Footer -->
-<footer class="bg-dark-green text-white py-4">
-    <div class="container text-center">
-        <p>&copy; 2024 Oscar Farms. All rights reserved.</p>
-        <div>
-            <a href="https://www.facebook.com" target="_blank" class="text-white me-3">
-                <i class="bi bi-facebook"></i> Facebook
-            </a>
-            <a href="https://www.twitter.com" target="_blank" class="text-white me-3">
-                <i class="bi bi-twitter"></i> Twitter
-            </a>
-            <a href="https://www.linkedin.com" target="_blank" class="text-white me-3">
-                <i class="bi bi-linkedin"></i> LinkedIn
-            </a>
-            <a href="https://www.instagram.com" target="_blank" class="text-white">
-                <i class="bi bi-instagram"></i> Instagram
-            </a>
+<footer class="site-footer py-4">
+    <div class="container d-md-flex justify-content-between align-items-center text-center text-md-start">
+        <p class="mb-3 mb-md-0">&copy; 2026 Harvest Farms. All rights reserved.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
         </div>
     </div>
 </footer>
 
-
-    <!-- Add Bootstrap JS (optional for interactive components) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -30,9 +30,9 @@ PASSKEY = os.getenv('PASSKEY','default_passkey')
 SECRET_KEY = 'django-insecure-e=nb2!$3n@mah@e_6n$qsf!_klhk%#q3o__)2x0mxt1owqni^='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'harvestfarms-ecommercewebsite.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', 'harvestfarms-ecommercewebsite.onrender.com']
 
 
 
@@ -95,18 +95,30 @@ WSGI_APPLICATION = 'HarvestFarms_EcommerceWebsite.wsgi.application'
    # }
 #}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "harvestfarms",
-        'USER': "harvestfarms_user",
-        'PASSWORD': "18m0aqoB58HMyVTzo2zKW07VtYt2OA42",
-        'HOST': "dpg-cum7vo8gph6c73dcr1qg-a.oregon-postgres.render.com",
-        'PORT': 5432,
+USE_REMOTE_DB = os.getenv('USE_REMOTE_DB', '0') == '1'
 
-
-   }
-}
+if USE_REMOTE_DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', "harvestfarms"),
+            'USER': os.getenv('DB_USER', "harvestfarms_user"),
+            'PASSWORD': os.getenv('DB_PASSWORD', "18m0aqoB58HMyVTzo2zKW07VtYt2OA42"),
+            'HOST': os.getenv('DB_HOST', "dpg-cum7vo8gph6c73dcr1qg-a.oregon-postgres.render.com"),
+            'PORT': int(os.getenv('DB_PORT', 5432)),
+            'OPTIONS': {
+                'sslmode': 'require',
+                'connect_timeout': 10,
+            },
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -155,7 +167,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if DEBUG:
+    # In development, serve current static files directly so edits appear immediately.
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
