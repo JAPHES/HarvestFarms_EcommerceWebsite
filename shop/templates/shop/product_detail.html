@@ -275,6 +275,7 @@
                     <div class="buy-box">
                         <form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
                             {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
                             <label for="quantity" class="form-label fw-bold text-uppercase small">Quantity</label>
                             <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control qty-input mb-3" {% if product.stock < 1 %}disabled{% endif %}>
                             <button type="submit" class="btn btn-farm w-100 mb-2" {% if product.stock < 1 %}disabled{% endif %}>Add to Cart</button>

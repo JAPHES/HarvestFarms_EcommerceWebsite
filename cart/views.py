@@ -65,7 +65,10 @@ def add_to_cart(request, product_id):
     request.session['cart'] = cart
     request.session.modified = True
 
-    # Redirect to the view_cart page
+    # Return to the page where user added the item so cart badge updates there.
+    redirect_target = request.POST.get('next') or request.META.get('HTTP_REFERER')
+    if redirect_target:
+        return redirect(redirect_target)
     return redirect('cart:view_cart')
 
 
