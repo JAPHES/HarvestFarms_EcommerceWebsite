@@ -3,125 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact Form</title>
+    <title>Contact Us - Harvest Farms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --soil: #3a2e24;
+            --leaf-dark: #254f32;
+            --leaf: #3f7a4f;
+            --leaf-soft: #7ea26f;
+            --cream: #f5f0e3;
+            --cream-2: #ede5d2;
+            --text: #2f352f;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e3f2fd; /* Light blue background */
-            padding: 0;
             margin: 0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 8% 5%, rgba(126, 162, 111, 0.22), transparent 35%),
+                radial-gradient(circle at 95% 10%, rgba(37, 79, 50, 0.14), transparent 36%),
+                linear-gradient(180deg, #faf7ef 0%, var(--cream) 55%, var(--cream-2) 100%);
         }
 
-        .form-container {
-            background-color: #fff;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            width: 420px;
-            text-align: center;
+        .contact-wrap {
+            padding: 2.6rem 0 3.8rem;
         }
 
-        h1 {
-            color: #f44336; /* Red to attract attention */
-            margin-bottom: 20px;
-            font-size: 32px;
+        .panel {
+            border: 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(41, 53, 43, 0.18);
+            background: #fff;
+            height: 100%;
         }
 
-        label {
+        .contact-intro {
+            background: linear-gradient(145deg, var(--leaf-dark), var(--leaf));
+            color: #fff;
+            padding: 2rem 1.5rem;
+            height: 100%;
+        }
+
+        .contact-intro h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-intro p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-form-area {
+            padding: 2rem 1.5rem;
+        }
+
+        .contact-form-area h2 {
+            color: var(--soil);
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: #3d4a3f;
+            font-size: 0.92rem;
+        }
+
+        .form-control {
+            border-radius: 0.7rem;
+            border: 1px solid #d4dccf;
+            padding: 0.72rem 0.85rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--leaf-soft);
+            box-shadow: 0 0 0 0.2rem rgba(126, 162, 111, 0.22);
+        }
+
+        .btn-farm {
+            border: 0;
+            border-radius: 0.7rem;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--leaf-dark), var(--leaf));
+        }
+
+        .btn-farm:hover {
+            color: #fff;
+            opacity: 0.96;
+        }
+
+        .info-card {
+            margin-top: 1.2rem;
+            background: #f7f3e7;
+            border: 1px solid #e6dcc3;
+            border-radius: 0.8rem;
+            padding: 1rem;
+        }
+
+        .map-box {
+            margin-top: 1.4rem;
+            border: 1px solid #d8e0cf;
+            border-radius: 0.8rem;
+            overflow: hidden;
+            box-shadow: 0 10px 26px rgba(41, 53, 43, 0.14);
+        }
+
+        .map-box iframe {
+            border: 0;
+            width: 100%;
+            height: 330px;
             display: block;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: #333;
-            font-size: 16px;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="phone"],
-        textarea {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-            color: #333;
+        .errorlist {
+            list-style: none;
+            margin: 0.3rem 0 0;
+            padding: 0;
+            color: #a4342a;
+            font-size: 0.85rem;
         }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="phone"]:focus,
-        textarea:focus {
-            border-color: #f44336; /* Focus color change */
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            background-color: #f44336; /* Red button */
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #d32f2f; /* Darker red on hover */
-            transform: scale(1.05); /* Slight enlarge effect */
-        }
-
-        .welcome-message {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #999;
-        }
-
-        .footer a {
-            color: #f44336; /* Red link for footer */
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
 {% include 'partials/navbar.html' %}
-{% block content %}
 
-<form method="POST">
-    {% csrf_token %}
-    <div class="form-container mt-4 mb-5 mx-auto">
-        <h1>Contact OSCAR FARMS!</h1>
-        <p class="welcome-message">We're excited to hear from you! Please fill out the form below, and we'll get in touch soon.</p>
+<main class="contact-wrap">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <section class="panel contact-intro">
+                    <h1>Contact Harvest Farms</h1>
+                    <p>Reach out for seedlings, product availability, order support, and farm guidance.</p>
+                    <div class="info-card">
+                        <p class="mb-1"><strong>Phone:</strong> 0769 809 329 / 0790 841 412</p>
+                        <p class="mb-1"><strong>Email:</strong> support@harvestfarms.local</p>
+                        <p class="mb-0"><strong>Region:</strong> Tharaka Nithi County, Kenya</p>
+                    </div>
+                </section>
+            </div>
 
-        <div>
-            {{ form.as_p }}
+            <div class="col-lg-7">
+                <section class="panel contact-form-area">
+                    <h2>Send Us a Message</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <ul class="errorlist">
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <ul class="errorlist">{% for error in form.name.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <ul class="errorlist">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.phone.id_for_label }}">Phone</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <ul class="errorlist">{% for error in form.phone.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="{{ form.message.id_for_label }}">Message</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <ul class="errorlist">{% for error in form.message.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-farm w-100">Send Message</button>
+                    </form>
+                </section>
+            </div>
         </div>
 
-        <button type="submit">Submit</button>
-
-        <div class="footer">
-            <p>Need assistance? <a href="#">Contact support</a></p>
-            <p>Phone Number</p>
-            <p>0769809329/0790841412</p>
-        </div>
+        <section class="map-box">
+            <iframe
+                src="https://www.google.com/maps?q=Tharaka+Nithi+County,+Kenya&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Map of Tharaka Nithi County">
+            </iframe>
+        </section>
     </div>
-</form>
-{% endblock %}
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% include 'partials/footer.html' %}
 </body>
 </html>
+

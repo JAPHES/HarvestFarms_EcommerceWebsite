@@ -1,0 +1,110 @@
+<style>
+    .hf-footer {
+        margin-top: 2.5rem;
+        background: linear-gradient(160deg, #1c2e21, #2c5138);
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hf-footer .footer-top {
+        padding: 2.2rem 0 1.4rem;
+    }
+
+    .hf-footer h5 {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 0.85rem;
+        color: #f4edd8;
+    }
+
+    .hf-footer p,
+    .hf-footer li {
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin-bottom: 0.3rem;
+    }
+
+    .hf-footer ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hf-footer a {
+        color: rgba(255, 255, 255, 0.92);
+        text-decoration: none;
+    }
+
+    .hf-footer a:hover {
+        color: #d6e7c8;
+        text-decoration: underline;
+    }
+
+    .hf-footer .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.85rem 0;
+        font-size: 0.86rem;
+    }
+
+    .hf-footer .social-links a {
+        display: inline-block;
+        margin-left: 0.65rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 767px) {
+        .hf-footer .social-links a {
+            margin-left: 0;
+            margin-right: 0.7rem;
+        }
+    }
+</style>
+
+<footer class="hf-footer">
+    <div class="container footer-top">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <h5>Harvest Farms</h5>
+                <p>Trusted farm products, quality seedlings, and practical support for better harvests.</p>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'shop:product_list' %}">Products</a></li>
+                    <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    <li><a href="{% url 'contact:contact_form' %}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5>Contact</h5>
+                <ul>
+                    <li>Tharaka Nithi County, Kenya</li>
+                    <li><a href="tel:+254769809329">+254 769 809 329</a></li>
+                    <li><a href="tel:+254790841412">+254 790 841 412</a></li>
+                    <li><a href="mailto:support@harvestfarms.local">support@harvestfarms.local</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h5>Support</h5>
+                <ul>
+                    <li><a href="{% url 'contact:contact_form' %}">Customer Help</a></li>
+                    <li><a href="#">Delivery Information</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container footer-bottom">
+        <div class="d-md-flex justify-content-between align-items-center text-center text-md-start">
+            <span>&copy; {% now "Y" %} Harvest Farms. All rights reserved.</span>
+            <div class="social-links mt-2 mt-md-0">
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
+            </div>
+        </div>
+    </div>
+</footer>

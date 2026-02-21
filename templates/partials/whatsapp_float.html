@@ -1,0 +1,110 @@
+<style>
+    .hf-whatsapp-wrap {
+        position: fixed;
+        right: 18px;
+        bottom: 22px;
+        z-index: 1200;
+    }
+
+    .hf-whatsapp-float {
+        position: relative;
+        position: fixed;
+        right: 18px;
+        bottom: 22px;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #25d366, #1ea952);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 28px rgba(10, 40, 20, 0.35);
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .hf-whatsapp-float:hover {
+        transform: translateY(-2px) scale(1.03);
+        filter: brightness(1.03);
+    }
+
+    .hf-whatsapp-float svg {
+        width: 30px;
+        height: 30px;
+        fill: #fff;
+    }
+
+    .hf-whatsapp-label {
+        position: fixed;
+        right: 88px;
+        bottom: 30px;
+        background: linear-gradient(135deg, #ffffff, #f3f8f2);
+        color: #20492f;
+        border: 1px solid #cde0cc;
+        border-radius: 999px;
+        padding: 0.45rem 0.78rem;
+        font-size: 0.81rem;
+        font-weight: 800;
+        box-shadow: 0 10px 22px rgba(18, 42, 24, 0.14);
+        z-index: 1199;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    .hf-whatsapp-ping {
+        position: fixed;
+        right: 14px;
+        bottom: 18px;
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        background: rgba(37, 211, 102, 0.28);
+        z-index: 1198;
+        animation: hfPing 2.2s ease-out infinite;
+    }
+
+    @keyframes hfPing {
+        0% {
+            transform: scale(0.75);
+            opacity: 0.85;
+        }
+        70% {
+            transform: scale(1.15);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.15);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .hf-whatsapp-label {
+            display: none;
+        }
+        .hf-whatsapp-ping {
+            right: 12px;
+            bottom: 16px;
+        }
+        .hf-whatsapp-float {
+            right: 16px;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+        }
+    }
+</style>
+<span class="hf-whatsapp-ping" aria-hidden="true"></span>
+<span class="hf-whatsapp-label">Reach out to Harvest Farms here</span>
+<a
+    href="https://wa.me/254769809329?text=Reach%20out%20to%20Harvest%20Farms%20here"
+    class="hf-whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with Harvest Farms on WhatsApp"
+    title="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M19.11 17.37c-.27-.14-1.6-.79-1.84-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.31.2-.58.07-.27-.14-1.13-.42-2.15-1.34-.79-.71-1.33-1.59-1.49-1.86-.16-.27-.02-.42.12-.55.12-.12.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.05-.34-.02-.47-.07-.14-.61-1.47-.84-2.02-.22-.53-.44-.46-.61-.47h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27 0 1.34.97 2.63 1.11 2.81.14.18 1.9 2.9 4.6 4.06.64.28 1.14.45 1.53.57.64.2 1.22.17 1.68.1.51-.08 1.6-.65 1.83-1.27.23-.62.23-1.16.16-1.27-.07-.12-.25-.18-.52-.31z"/>
+        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.53 1.74 6.5L3 29l6.68-1.72A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm0 23.63c-1.98 0-3.92-.53-5.63-1.54l-.4-.24-3.97 1.02 1.06-3.87-.26-.4a10.6 10.6 0 0 1-1.64-5.6C5.16 10.11 10.11 5.16 16 5.16S26.84 10.11 26.84 16 21.89 26.63 16 26.63z"/>
+    </svg>
+</a>

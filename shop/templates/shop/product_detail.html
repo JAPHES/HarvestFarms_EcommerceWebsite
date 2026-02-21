@@ -4,221 +4,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.name }}</title>
+    <title>{{ product.name }} - Harvest Farms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --hf-cream: #f8f5ea;
-            --hf-ink: #1f2b20;
-            --hf-forest: #1f5c3d;
-            --hf-forest-dark: #17452e;
-            --hf-gold: #cf9a3b;
-            --hf-muted: #5d6b62;
-            --hf-card: #ffffff;
-            --hf-line: #dce5dd;
-            --hf-shadow: 0 18px 42px rgba(19, 37, 27, 0.14);
+            --soil: #3b2f24;
+            --leaf-900: #1d442c;
+            --leaf-700: #2f6a43;
+            --leaf-500: #5a9364;
+            --cream: #f5efdf;
+            --card: #ffffff;
+            --ink: #2c342d;
+            --muted: #5d6a5f;
+            --line: #d8dfd0;
+            --gold: #bf8d35;
+            --shadow: 0 22px 48px rgba(19, 33, 23, 0.18);
         }
 
         body {
             margin: 0;
-            color: var(--hf-ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: var(--ink);
             background:
-                radial-gradient(circle at 90% -20%, rgba(30, 92, 62, 0.16), transparent 38%),
-                radial-gradient(circle at -10% 20%, rgba(207, 154, 59, 0.16), transparent 34%),
-                var(--hf-cream);
-            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+                radial-gradient(circle at 88% -10%, rgba(90, 147, 100, 0.2), transparent 38%),
+                radial-gradient(circle at 0% 20%, rgba(29, 68, 44, 0.12), transparent 35%),
+                linear-gradient(180deg, #faf7ef 0%, var(--cream) 55%, #efe7d3 100%);
         }
 
-        .hf-shell {
-            padding: 2rem 0 3.25rem;
+        .detail-wrap {
+            padding: 2rem 0 3rem;
         }
 
-        .hf-detail-card {
-            border: 1px solid rgba(31, 92, 61, 0.12);
-            border-radius: 24px;
-            background: var(--hf-card);
-            box-shadow: var(--hf-shadow);
+        .crumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 1rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .crumb:hover {
+            color: var(--leaf-700);
+        }
+
+        .detail-card {
+            background: var(--card);
+            border: 1px solid rgba(47, 106, 67, 0.16);
+            border-radius: 1.05rem;
+            box-shadow: var(--shadow);
             overflow: hidden;
-            animation: cardRise 420ms ease;
         }
 
-        .hf-media-wrap {
+        .media-panel {
             position: relative;
-            min-height: 320px;
-            background: linear-gradient(140deg, #d8ead5, #f3ead4);
+            min-height: 380px;
+            background: linear-gradient(145deg, #dcead8, #f4e8d3);
         }
 
-        .hf-product-image {
-            width: 100%;
-            height: 100%;
-            min-height: 320px;
-            max-height: 560px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .hf-badge {
+        .stock-tag {
             position: absolute;
             top: 1rem;
             left: 1rem;
             z-index: 2;
             border-radius: 999px;
             padding: 0.35rem 0.8rem;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            background: rgba(31, 92, 61, 0.92);
-            color: #fff;
-        }
-
-        .hf-content {
-            padding: 2rem 1.6rem 1.7rem;
-        }
-
-        .hf-title {
-            margin: 0 0 0.65rem;
-            line-height: 1.16;
-            font-size: clamp(1.7rem, 3vw, 2.35rem);
+            font-size: 0.75rem;
             font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #fff;
+            background: rgba(29, 68, 44, 0.9);
         }
 
-        .hf-description {
-            color: var(--hf-muted);
-            line-height: 1.7;
-            margin-bottom: 1.25rem;
-            font-size: 1rem;
-            max-width: 70ch;
+        .stock-tag.out {
+            background: rgba(164, 57, 47, 0.9);
         }
 
-        .hf-meta-grid {
+        .product-image {
+            width: 100%;
+            height: 100%;
+            min-height: 380px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .info-panel {
+            padding: 1.6rem;
+        }
+
+        .title {
+            margin: 0 0 0.7rem;
+            font-family: "Fraunces", serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: var(--soil);
+            line-height: 1.12;
+        }
+
+        .desc {
+            margin: 0 0 1rem;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 0.97rem;
+        }
+
+        .meta-cards {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.75rem;
+            gap: 0.7rem;
             margin-bottom: 1rem;
         }
 
-        .hf-meta-box {
-            border: 1px solid var(--hf-line);
-            border-radius: 14px;
-            padding: 0.8rem 0.9rem;
-            background: #fcfdfb;
+        .meta {
+            background: #fbfdf9;
+            border: 1px solid var(--line);
+            border-radius: 0.8rem;
+            padding: 0.75rem 0.8rem;
         }
 
-        .hf-meta-label {
+        .meta-label {
             display: block;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
+            font-size: 0.74rem;
             text-transform: uppercase;
-            color: #6f7e74;
+            letter-spacing: 0.08em;
+            color: #728173;
             margin-bottom: 0.25rem;
             font-weight: 700;
         }
 
-        .hf-price {
-            font-size: 1.45rem;
+        .meta-value {
+            font-size: 1.3rem;
             font-weight: 800;
-            color: var(--hf-forest);
+            color: var(--leaf-900);
         }
 
-        .hf-stock {
-            font-weight: 700;
+        .trust-list {
+            margin: 0 0 1rem;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.45rem;
         }
 
-        .hf-stock.in {
-            color: #2a844d;
-        }
-
-        .hf-stock.out {
-            color: #ab3e34;
-        }
-
-        .hf-purchase-card {
-            border: 1px dashed rgba(31, 92, 61, 0.35);
-            border-radius: 16px;
-            padding: 1rem;
-            background: #fbfef8;
-        }
-
-        .hf-form-label {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #4f6055;
-            margin-bottom: 0.45rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .hf-qty-input {
-            border: 1px solid #bfd0bf;
-            border-radius: 12px;
-            padding: 0.62rem 0.78rem;
+        .trust-list li {
+            border: 1px solid #e0e6da;
+            border-radius: 0.65rem;
+            background: #f9fcf6;
+            padding: 0.55rem 0.7rem;
+            font-size: 0.88rem;
             font-weight: 600;
+            color: #4f5f52;
         }
 
-        .hf-btn-primary {
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
+        .buy-box {
+            border: 1px dashed rgba(47, 106, 67, 0.38);
+            border-radius: 0.8rem;
+            background: #f8fbf4;
+            padding: 0.95rem;
+        }
+
+        .qty-input {
+            border-radius: 0.7rem;
+            border: 1px solid #bfd0bf;
+            padding: 0.65rem 0.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--hf-forest), var(--hf-forest-dark));
-            color: #fff;
         }
 
-        .hf-btn-primary:hover {
+        .btn-farm {
+            border: 0;
+            border-radius: 0.72rem;
+            padding: 0.72rem 1rem;
             color: #fff;
-            filter: brightness(1.06);
-        }
-
-        .hf-btn-accent {
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
             font-weight: 700;
-            background: linear-gradient(140deg, #d7a241, #b78327);
-            color: #fff;
+            background: linear-gradient(135deg, var(--leaf-900), var(--leaf-700));
         }
 
-        .hf-btn-accent:hover {
+        .btn-farm:hover {
             color: #fff;
-            filter: brightness(1.05);
+            opacity: 0.97;
         }
 
-        .hf-btn-outline {
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
+        .btn-gold {
+            border: 0;
+            border-radius: 0.72rem;
+            padding: 0.72rem 1rem;
+            color: #fff;
             font-weight: 700;
-            border: 1px solid rgba(31, 92, 61, 0.32);
-            color: var(--hf-forest);
+            background: linear-gradient(135deg, var(--gold), #a87522);
+        }
+
+        .btn-gold:hover {
+            color: #fff;
+            opacity: 0.97;
+        }
+
+        .btn-outline-farm {
+            border: 1px solid rgba(47, 106, 67, 0.4);
+            border-radius: 0.72rem;
+            padding: 0.72rem 1rem;
+            color: var(--leaf-900);
             background: #fff;
+            font-weight: 700;
         }
 
-        .hf-btn-outline:hover {
-            background: rgba(31, 92, 61, 0.06);
-            color: var(--hf-forest-dark);
-        }
-
-        @keyframes cardRise {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .btn-outline-farm:hover {
+            color: var(--leaf-900);
+            background: rgba(47, 106, 67, 0.06);
         }
 
         @media (max-width: 991px) {
-            .hf-shell {
-                padding-top: 1.1rem;
+            .info-panel {
+                padding: 1.15rem 1rem;
             }
 
-            .hf-content {
-                padding: 1.25rem 1rem 1.1rem;
-            }
-
-            .hf-meta-grid {
+            .meta-cards {
                 grid-template-columns: 1fr;
             }
         }
@@ -226,61 +231,63 @@
 </head>
 <body>
     {% include 'partials/navbar.html' %}
-    <main class="hf-shell">
+
+    <main class="detail-wrap">
         <div class="container">
-            <div class="hf-detail-card row g-0">
-                <div class="col-lg-6">
-                    <div class="hf-media-wrap h-100">
-                        {% if product.stock > 0 %}
-                            <span class="hf-badge">In Stock</span>
-                        {% else %}
-                            <span class="hf-badge" style="background: rgba(171, 62, 52, 0.92);">Sold Out</span>
-                        {% endif %}
-                        {% if product.image %}
-                            <img class="hf-product-image" src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null;this.src='{% static 'core/images/homepicture.jpg' %}';">
-                        {% else %}
-                            <img class="hf-product-image" src="{% static 'core/images/homepicture.jpg' %}" alt="{{ product.name }}">
-                        {% endif %}
+            <a href="{% url 'shop:product_list' %}" class="crumb">&larr; Back to products</a>
+
+            <section class="detail-card row g-0">
+                <div class="col-lg-6 media-panel">
+                    {% if product.stock > 0 %}
+                        <span class="stock-tag">In Stock</span>
+                    {% else %}
+                        <span class="stock-tag out">Sold Out</span>
+                    {% endif %}
+
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null;this.src='{% static 'core/images/homepicture.jpg' %}';">
+                    {% else %}
+                        <img class="product-image" src="{% static 'core/images/homepicture.jpg' %}" alt="No image available">
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-6 info-panel">
+                    <h1 class="title">{{ product.name }}</h1>
+                    <p class="desc">{{ product.description|linebreaksbr }}</p>
+
+                    <div class="meta-cards">
+                        <article class="meta">
+                            <span class="meta-label">Price</span>
+                            <span class="meta-value">${{ product.price }}</span>
+                        </article>
+                        <article class="meta">
+                            <span class="meta-label">Available Units</span>
+                            <span class="meta-value">{{ product.stock }}</span>
+                        </article>
+                    </div>
+
+                    <ul class="trust-list">
+                        <li>Healthy farm-grade products selected for quality</li>
+                        <li>Reliable support from order to delivery</li>
+                        <li>Secure checkout and straightforward ordering</li>
+                    </ul>
+
+                    <div class="buy-box">
+                        <form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <label for="quantity" class="form-label fw-bold text-uppercase small">Quantity</label>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control qty-input mb-3" {% if product.stock < 1 %}disabled{% endif %}>
+                            <button type="submit" class="btn btn-farm w-100 mb-2" {% if product.stock < 1 %}disabled{% endif %}>Add to Cart</button>
+                        </form>
+                        <a href="{% url 'cart:checkout' %}" class="btn btn-gold w-100 mb-2">Proceed to Checkout</a>
+                        <a href="{% url 'shop:product_list' %}" class="btn btn-outline-farm w-100">Back to Product List</a>
                     </div>
                 </div>
-
-                <div class="col-lg-6">
-                    <section class="hf-content">
-                        <h1 class="hf-title">{{ product.name }}</h1>
-                        <p class="hf-description">{{ product.description|linebreaksbr }}</p>
-
-                        <div class="hf-meta-grid">
-                            <div class="hf-meta-box">
-                                <span class="hf-meta-label">Price</span>
-                                <span class="hf-price">${{ product.price }}</span>
-                            </div>
-                            <div class="hf-meta-box">
-                                <span class="hf-meta-label">Availability</span>
-                                {% if product.stock > 0 %}
-                                    <span class="hf-stock in">{{ product.stock }} unit{{ product.stock|pluralize }} ready</span>
-                                {% else %}
-                                    <span class="hf-stock out">Out of stock</span>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="hf-purchase-card">
-                            <form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
-                                {% csrf_token %}
-                                <label for="quantity" class="hf-form-label">Quantity</label>
-                                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control hf-qty-input mb-3" {% if product.stock < 1 %}disabled{% endif %}>
-                                <button type="submit" class="btn hf-btn-primary w-100 mb-2" {% if product.stock < 1 %}disabled{% endif %}>Add to Cart</button>
-                            </form>
-
-                            <a href="{% url 'cart:checkout' %}" class="btn hf-btn-accent w-100 mb-2">Proceed to Checkout</a>
-                            <a href="{% url 'shop:product_list' %}" class="btn hf-btn-outline w-100">Back to Product List</a>
-                        </div>
-                    </section>
-                </div>
-            </div>
+            </section>
         </div>
     </main>
 
+    {% include 'partials/footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

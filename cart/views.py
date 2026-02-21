@@ -22,17 +22,26 @@ def update_cart(request, cart):
 def cart_view(request):
     cart = request.session.get('cart', {})  # Get the cart from session, or an empty dictionary if it doesn't exist
     cart_items = []
+    cart_total = 0
+    total_items = 0
 
     # Fetch product details for each item in the cart
     for product_id, quantity in cart.items():
         product = get_object_or_404(Product, id=product_id)
+        line_total = product.price * quantity
         cart_items.append({
             'product': product,
             'quantity': quantity,
-            'total_price': product.price * quantity
+            'total_price': line_total
         })
+        cart_total += line_total
+        total_items += quantity
 
-    return render(request, 'cart/view_cart.html', {'cart_items': cart_items})
+    return render(request, 'cart/view_cart.html', {
+        'cart_items': cart_items,
+        'cart_total': cart_total,
+        'total_items': total_items,
+    })
 
 
 # View to add a product to the cart
@@ -52,6 +61,7 @@ def add_to_cart(request, product_id):
 
     # Save the cart back to session
     request.session['cart'] = cart
+    request.session.modified = True
 
     # Redirect to the view_cart page
     return redirect('cart:view_cart')
@@ -60,10 +70,11 @@ def add_to_cart(request, product_id):
 # View to remove a product from the cart
 def remove_from_cart(request, product_id):
     cart = get_cart(request)
+    product_id = str(product_id)
 
     if product_id in cart:
         del cart[product_id]
-        update_cart(request, cart)
+    update_cart(request, cart)
 
     return redirect('cart:view_cart')  # Redirect to view cart page
 
@@ -71,10 +82,14 @@ def remove_from_cart(request, product_id):
 # View to update product quantity in the cart
 def update_cart_quantity(request, product_id):
     cart = get_cart(request)
+    product_id = str(product_id)
     quantity = int(request.POST.get('quantity', 1))
 
     if product_id in cart:
-        cart[product_id] = quantity  # Update quantity
+        if quantity > 0:
+            cart[product_id] = quantity
+        else:
+            del cart[product_id]
 
     update_cart(request, cart)
     return redirect('cart:view_cart')

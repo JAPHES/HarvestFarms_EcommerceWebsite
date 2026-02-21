@@ -4,62 +4,194 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product - Harvest Farms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --soil: #3a2e24;
+            --leaf-dark: #254f32;
+            --leaf: #3f7a4f;
+            --leaf-soft: #7ea26f;
+            --cream: #f5f0e3;
+            --cream-2: #ede5d2;
+            --text: #2f352f;
+        }
+
         body {
-            background-color: #f7f2e3; /* Light farm-like background */
-            color: #4b6d4e; /* Dark green text for a farm feel */
+            margin: 0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 8% 2%, rgba(126, 162, 111, 0.2), transparent 35%),
+                radial-gradient(circle at 98% 10%, rgba(37, 79, 50, 0.14), transparent 35%),
+                linear-gradient(180deg, #faf7ef 0%, var(--cream) 54%, var(--cream-2) 100%);
+            min-height: 100vh;
         }
-        .form-container {
-            background-color: #ffffff; /* White background for form */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+
+        .add-wrap {
+            padding: 2.8rem 0 3.8rem;
         }
-        .btn-primary {
-            background-color: #4b6d4e; /* Dark green button */
-            border-color: #4b6d4e;
+
+        .add-shell {
+            border: 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 46px rgba(41, 53, 43, 0.2);
+            background: #fff;
         }
-        .btn-primary:hover {
-            background-color: #3a5d3b;
-            border-color: #3a5d3b;
+
+        .add-intro {
+            background: linear-gradient(145deg, var(--leaf-dark), var(--leaf));
+            color: #fff;
+            padding: 2rem 1.5rem;
+            height: 100%;
         }
-        h2 {
-            color: #3a5d3b;
-            border-bottom: 2px solid #4b6d4e;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+
+        .add-intro h1 {
+            font-weight: 800;
+            font-size: 1.85rem;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
         }
+
+        .add-intro p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.75rem;
+        }
+
+        .add-form {
+            padding: 2rem 1.6rem;
+        }
+
+        .add-form h2 {
+            color: var(--soil);
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
         .form-label {
-            color: #3a5d3b;
+            font-weight: 700;
+            color: #3d4a3f;
+            font-size: 0.92rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .form-control {
+            border-radius: 0.7rem;
+            border: 1px solid #d4dccf;
+            padding: 0.72rem 0.85rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--leaf-soft);
+            box-shadow: 0 0 0 0.2rem rgba(126, 162, 111, 0.2);
+        }
+
+        .helptext {
+            display: block;
+            margin-top: 0.15rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            color: #657162;
+        }
+
+        .errorlist {
+            list-style: none;
+            margin: 0.2rem 0 0.7rem;
+            padding: 0;
+            color: #a4342a;
+            font-size: 0.86rem;
+        }
+
+        .btn-add {
+            border: 0;
+            border-radius: 0.72rem;
+            padding: 0.78rem 1rem;
+            color: #fff;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--leaf-dark), var(--leaf));
+        }
+
+        .btn-add:hover {
+            color: #fff;
+            opacity: 0.96;
+        }
+
+        .btn-cancel {
+            border: 1px solid rgba(37, 79, 50, 0.35);
+            border-radius: 0.72rem;
+            padding: 0.78rem 1rem;
+            color: var(--leaf-dark);
+            background: #fff;
+            font-weight: 700;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(37, 79, 50, 0.06);
+            color: var(--leaf-dark);
         }
     </style>
 </head>
 <body>
     {% include 'partials/navbar.html' %}
 
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <div class="form-container">
-            <h2>Add Product to Harvest Farms</h2>
-            <p class="mb-4">Fill in the details below to add a new product to the inventory. Please double-check the information before submitting.</p>
-
-            <!-- Product Form -->
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                    {{ form.as_p }}
+    <main class="add-wrap">
+        <div class="container">
+            <div class="add-shell row g-0">
+                <div class="col-lg-4">
+                    <section class="add-intro">
+                        <h1>Add New Product</h1>
+                        <p>Use this form to publish a new product in the shop catalog.</p>
+                        <p>Tip: upload clear images and keep names short for better product browsing.</p>
+                    </section>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Add Product</button>
-            </form>
 
-            <!-- Note for Admin -->
-            <div class="mt-4">
-                <p class="text-muted text-center">All products will be visible to customers once added.</p>
+                <div class="col-lg-8">
+                    <section class="add-form">
+                        <h2>Product Information</h2>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {% if form.non_field_errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.help_text %}<small class="helptext">{{ field.help_text }}</small>{% endif %}
+                                    {% if field.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                <a href="{% url 'shop:product_list' %}" class="btn btn-cancel">Cancel</a>
+                                <button type="submit" class="btn btn-add">Save Product</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% include 'partials/footer.html' %}
 </body>
 </html>
+
