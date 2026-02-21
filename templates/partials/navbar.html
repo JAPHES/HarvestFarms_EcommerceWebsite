@@ -32,9 +32,15 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'shop:product_list' %}">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    {% endif %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact:contact_form' %}">Contact</a></li>
                     {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'shop:add_product' %}">Add Product</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>

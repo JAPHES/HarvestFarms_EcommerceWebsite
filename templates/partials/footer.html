@@ -71,7 +71,9 @@
                 <ul>
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'shop:product_list' %}">Products</a></li>
-                    <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
+                    {% endif %}
                     <li><a href="{% url 'contact:contact_form' %}">Contact Us</a></li>
                 </ul>
             </div>

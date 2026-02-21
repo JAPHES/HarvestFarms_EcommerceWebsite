@@ -19,6 +19,7 @@ def update_cart(request, cart):
 
 
 # View to display the cart
+@login_required
 def cart_view(request):
     cart = request.session.get('cart', {})  # Get the cart from session, or an empty dictionary if it doesn't exist
     cart_items = []
@@ -46,6 +47,7 @@ def cart_view(request):
 
 # View to add a product to the cart
 
+@login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     quantity = int(request.POST.get('quantity', 1))
@@ -68,6 +70,7 @@ def add_to_cart(request, product_id):
 
 
 # View to remove a product from the cart
+@login_required
 def remove_from_cart(request, product_id):
     cart = get_cart(request)
     product_id = str(product_id)
@@ -80,6 +83,7 @@ def remove_from_cart(request, product_id):
 
 
 # View to update product quantity in the cart
+@login_required
 def update_cart_quantity(request, product_id):
     cart = get_cart(request)
     product_id = str(product_id)
