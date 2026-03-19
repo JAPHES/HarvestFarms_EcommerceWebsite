@@ -4,8 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm
 from django.urls import reverse  # Helps resolve URL names to actual paths
-
+from django.http import HttpResponse
 # Create your views here.
+
+
+def health(request):
+    return HttpResponse("OK")
+
 def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
