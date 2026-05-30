@@ -4,6 +4,7 @@ Django ecommerce project for Harvest Farms with product browsing, account auth, 
 
 ## Stack
 - Python `3.13` (see `runtime.txt`)
+- `mise.toml` pins Python `3.13.0` for Railway/Railpack and disables the Python artifact attestation check that fails for this release.
 - Django `5.1.3`
 - SQLite by default, PostgreSQL in production via Railway environment variables
 - Pillow for product image uploads
@@ -113,6 +114,7 @@ python manage.py collectstatic --noinput
 
 ## Deployment Notes
 - `railway.json` defines the Railway build, migration, start, healthcheck, and restart settings.
+- `mise.toml` tells Railway/Railpack to install Python `3.13.0` without GitHub artifact attestation verification.
 - `Procfile` contains the Gunicorn web process for platforms that read Procfiles.
 - Set `DEBUG=0` and `SECRET_KEY` in production.
 - Set `DATABASE_URL=${{Postgres.DATABASE_URL}}` on the Railway app service after adding PostgreSQL.
