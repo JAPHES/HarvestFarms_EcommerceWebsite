@@ -5,7 +5,7 @@ Django ecommerce project for Harvest Farms with product browsing, account auth, 
 ## Stack
 - Python `3.13` (see `runtime.txt`)
 - Django `5.1.3`
-- SQLite by default, optional PostgreSQL via environment variables
+- SQLite by default, PostgreSQL in production via Railway environment variables
 - Pillow for product image uploads
 - WhiteNoise + Gunicorn for deployment
 
@@ -78,12 +78,13 @@ python manage.py runserver
 ## Configuration
 Environment variables supported in `settings.py`:
 - `DEBUG` (`1` or `0`)
-- `USE_REMOTE_DB` (`1` enables PostgreSQL; otherwise SQLite)
-- `DB_NAME`
-- `DB_USER`
-- `DB_PASSWORD`
-- `DB_HOST`
-- `DB_PORT`
+- `SECRET_KEY`
+- `DATABASE_URL` (recommended for Railway PostgreSQL)
+- `ALLOWED_HOSTS` (comma-separated custom domains, if needed)
+- `CSRF_TRUSTED_ORIGINS` (comma-separated HTTPS origins, if needed)
+- `RAILWAY_PUBLIC_DOMAIN` (provided by Railway after generating a domain)
+- `RAILWAY_PRIVATE_DOMAIN` (provided by Railway)
+- `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT` (Railway PostgreSQL fallback)
 - `CONSUMER_KEY`
 - `CONSUMER_SECRET`
 - `BASE_URL`
@@ -93,7 +94,6 @@ Environment variables supported in `settings.py`:
 PowerShell example:
 ```powershell
 $env:DEBUG="1"
-$env:USE_REMOTE_DB="0"
 ```
 
 ## Static and Media
@@ -112,6 +112,8 @@ python manage.py collectstatic --noinput
 ```
 
 ## Deployment Notes
-- `procfle` contains: `web: gunicorn HarvestFarms_EcommerceWebsite.wsgi:application`
-- Set `DEBUG=0` in production.
-- Move all secrets and database credentials to environment variables.
+- `railway.json` defines the Railway build, migration, start, healthcheck, and restart settings.
+- `Procfile` contains the Gunicorn web process for platforms that read Procfiles.
+- Set `DEBUG=0` and `SECRET_KEY` in production.
+- Set `DATABASE_URL=${{Postgres.DATABASE_URL}}` on the Railway app service after adding PostgreSQL.
+- Railway runs `python manage.py collectstatic --noinput` during build and `python manage.py migrate` before deployment.

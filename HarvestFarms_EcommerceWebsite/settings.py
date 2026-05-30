@@ -9,33 +9,69 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import os.path
 import os
 from pathlib import Path
+
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGIN_REDIRECT_URL = '/shop/products/'  # Redirect users here after login
 
-CONSUMER_KEY = os.getenv('CONSUMER_KEY','default_consumer_key')
-CONSUMER_SECRET = os.getenv('CONSUMER_SECRET','default_consumer_secret')
-BASE_URL = os.getenv('BASE_URL','default_base_url')
-SHORTCODE = os.getenv('SHORTCODE','default_shortcode')
-PASSKEY = os.getenv('PASSKEY','default_passkey')
+CONSUMER_KEY = os.getenv('CONSUMER_KEY', 'default_consumer_key')
+CONSUMER_SECRET = os.getenv('CONSUMER_SECRET', 'default_consumer_secret')
+BASE_URL = os.getenv('BASE_URL', 'default_base_url')
+SHORTCODE = os.getenv('SHORTCODE', 'default_shortcode')
+PASSKEY = os.getenv('PASSKEY', 'default_passkey')
+
+
+def env_bool(name, default=False):
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.lower() in {'1', 'true', 'yes', 'on'}
+
+
+def env_list(name, default=''):
+    value = os.getenv(name, default)
+    return [item.strip() for item in value.split(',') if item.strip()]
+
+
+def require_env(name):
+    value = os.getenv(name)
+    if not value:
+        raise ImproperlyConfigured(f'Set the {name} environment variable.')
+    return value
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e=nb2!$3n@mah@e_6n$qsf!_klhk%#q3o__)2x0mxt1owqni^='
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'django-insecure-e=nb2!$3n@mah@e_6n$qsf!_klhk%#q3o__)2x0mxt1owqni^=',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', '1') == '1'
+DEBUG = env_bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', 'harvestfarms-ecommercewebsite.onrender.com']
+if not DEBUG and not os.getenv('SECRET_KEY'):
+    raise ImproperlyConfigured('Set SECRET_KEY when DEBUG=0.')
 
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', '127.0.0.1,localhost,testserver')
+for railway_host_var in ('RAILWAY_PUBLIC_DOMAIN', 'RAILWAY_PRIVATE_DOMAIN'):
+    railway_host = os.getenv(railway_host_var)
+    if railway_host and railway_host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(railway_host)
 
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS')
+railway_public_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN')
+if railway_public_domain:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{railway_public_domain}')
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 # Application definition
 
@@ -55,12 +91,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -89,23 +125,34 @@ WSGI_APPLICATION = 'HarvestFarms_EcommerceWebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-   # }
-#}
+DATABASE_URL = os.getenv('DATABASE_URL')
+USE_REMOTE_DB = env_bool('USE_REMOTE_DB', default=False)
 
-USE_REMOTE_DB = os.getenv('USE_REMOTE_DB', '0') == '1'
+if DATABASE_URL:
+    import dj_database_url
 
-if USE_REMOTE_DB:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600),
+    }
+elif os.getenv('PGDATABASE'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', "harvestfarms"),
-            'USER': os.getenv('DB_USER', "harvestfarms_user"),
-            'PASSWORD': os.getenv('DB_PASSWORD', "18m0aqoB58HMyVTzo2zKW07VtYt2OA42"),
-            'HOST': os.getenv('DB_HOST', "dpg-cum7vo8gph6c73dcr1qg-a.oregon-postgres.render.com"),
+            'NAME': require_env('PGDATABASE'),
+            'USER': require_env('PGUSER'),
+            'PASSWORD': require_env('PGPASSWORD'),
+            'HOST': require_env('PGHOST'),
+            'PORT': int(os.getenv('PGPORT', 5432)),
+        }
+    }
+elif USE_REMOTE_DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': require_env('DB_NAME'),
+            'USER': require_env('DB_USER'),
+            'PASSWORD': require_env('DB_PASSWORD'),
+            'HOST': require_env('DB_HOST'),
             'PORT': int(os.getenv('DB_PORT', 5432)),
             'OPTIONS': {
                 'sslmode': 'require',
@@ -159,7 +206,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-import os.path
 
 # media files settings
 MEDIA_URL = '/media/'
@@ -167,7 +213,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if DEBUG:
     # In development, serve current static files directly so edits appear immediately.
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

@@ -18,15 +18,18 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from cart import views
-from core.views import home_view
+from accounts.views import health
 import logging
+
 logger = logging.getLogger(__name__)
+
+
 def check_url_patterns(urlconf):
     for pattern in urlconf.url_patterns:
         logger.debug(f"Checking pattern: {pattern}")
 
 urlpatterns = [
+    path('health/', health, name='health'),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),  # Home and general pages
     path('contact/', include('contact.urls')),  # Contact form
