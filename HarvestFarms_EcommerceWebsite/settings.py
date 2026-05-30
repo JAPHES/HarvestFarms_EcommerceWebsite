@@ -58,7 +58,10 @@ DEBUG = env_bool('DEBUG', default=True)
 if not DEBUG and not os.getenv('SECRET_KEY'):
     raise ImproperlyConfigured('Set SECRET_KEY when DEBUG=0.')
 
-ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', '127.0.0.1,localhost,testserver')
+ALLOWED_HOSTS = env_list(
+    'ALLOWED_HOSTS',
+    '127.0.0.1,localhost,testserver,healthcheck.railway.app',
+)
 for railway_host_var in ('RAILWAY_PUBLIC_DOMAIN', 'RAILWAY_PRIVATE_DOMAIN'):
     railway_host = os.getenv(railway_host_var)
     if railway_host and railway_host not in ALLOWED_HOSTS:
